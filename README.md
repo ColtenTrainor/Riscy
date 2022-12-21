@@ -1,2 +1,2 @@
 # Riscy
-Simulator and other tools for RISCY hardware.
+Simulator and other tools for RISCY architecture.
