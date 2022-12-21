@@ -22,8 +22,9 @@ public static class Riscy
 				_sim.Run();
 				break;
 			case RunMode.rom:
-				Console.WriteLine("ROM programming not yet implemented");
-				Environment.Exit(0);
+				var romProg = new RomProgrammer();
+				romProg.ProgramRoms();
+				romProg.SaveRomTables();
 				break;
 		}
 	}
@@ -45,30 +46,8 @@ public static class Riscy
 			PrintHelp();
 			Environment.Exit(0);
 		}
-		
-		if (!File.Exists(args[0]))
-		{
-			Console.WriteLine("Input file not found.");
-			Environment.Exit(-2);
-		}
 
-		try
-		{
-			var programFile = File.ReadAllLines(args[0]);
-			program = new byte[programFile.Length];
-			for (int i = 0; i < programFile.Length; i++)
-			{
-				program[i] = Byte.Parse(programFile[i], NumberStyles.HexNumber);
-			}
-		}
-		catch(Exception e)
-		{
-			Console.WriteLine("Error reading input file.\n");
-			Console.WriteLine(e);
-			Environment.Exit(-3);
-		}
-
-		for(int i = 1; i < args.Length; i++)
+		for(int i = 0; i < args.Length; i++)
 		{
 			switch (args[i])
 			{
@@ -77,6 +56,27 @@ public static class Riscy
 					break;
 				case "sim":
 					_runMode = RunMode.sim;
+					if (!File.Exists(args[1]))
+					{
+						Console.WriteLine("Input file not found.");
+						Environment.Exit(-2);
+					}
+
+					try
+					{
+						var programFile = File.ReadAllLines(args[1]);
+						program = new byte[programFile.Length];
+						for (int j = 0; j < programFile.Length; j++)
+						{
+							program[j] = Byte.Parse(programFile[j], NumberStyles.HexNumber);
+						}
+					}
+					catch(Exception e)
+					{
+						Console.WriteLine("Error reading input file.\n");
+						Console.WriteLine(e);
+						Environment.Exit(-3);
+					}
 					break;
 				case "rom":
 					_runMode = RunMode.rom;
@@ -109,10 +109,7 @@ sim [program]       Run a simulation of a riscy machine. [program] should be a f
 --d                 Enables debug output.
     
 rom                 Output txt document for programming a control unit ROM.
---o [filename]      Name of output file.
---ip [pin count]    Number of address input pins on ROM.
---op [pin count]    Number of data output pins on ROM.
---m [bytes]         Bytes of memory in ROM.
+--o [filename]      Name of output file. [not yet implemented]
 ");
 	}
 }

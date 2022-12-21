@@ -1,0 +1,65 @@
+#       NOP                     do nothing
+#               0 0 0 0 0 0 0 0
+#
+#       HALT                    halt processor
+#               0 0 0 0 0 0 0 1
+#
+#       PAGE            [RD]    set the upper 8 bits of load/store
+#               0 0 0 0 p p 1 1
+#
+#       SUB             RD, RS  subtract registers RD-RS, store the result in RD
+#               0 0 0 1 d d s s
+#
+#       LOAD            RD,[RS] load 1 byte from memory at address PAGE:RS into RD
+#               0 0 1 0 d d s s
+#
+#       STORE           RD,[RS] store 1 byte from RD into memory at address PAGE:RS
+#               0 0 1 1 d d s s
+#
+#       SKIPZ           RD      if RD==0, skip next instruction
+#               0 1 0 0 d d 0 0
+#
+#       SKIPNZ          RD      if RD!=0, skip next instruction
+#               0 1 0 0 d d 0 1
+#
+#       SKIPL           RD      if RD<0, skip next instruction
+#               0 1 0 0 d d 1 0
+#
+#       SKIPGE          RD      if RD>=0, skip next instruction
+#               0 1 0 0 d d 1 1
+#
+#       JALR            RD,[RS] save PC+1 into RD, jump to RS
+#               0 1 0 1 d d s s
+#
+#       NAND            RD, RS  nand registers ~(RD&RS), store the result in RD
+#               0 1 1 0 d d s s
+#
+#       ADD             RD, RS  add registers RD+RS, store the result in RD
+#               0 1 1 1 d d s s
+#       INC             RD      RD = RD+1
+#               1 0 0 0 d d 0 0
+#
+#       DEC             RD      RD = RD-1
+#               1 0 0 0 d d 0 1
+#
+#       OUT             RD      output = RD
+#               1 0 0 0 d d 1 0
+#
+#       IN              RD      RD = input
+#               1 0 0 0 d d 1 1
+#
+#       JMPFAR                  jump to a 16 bit address C:RD, saving PC+1 into RS
+#               1 0 0 1 d d 1 0
+#
+#       PUSH                    sp--, save RD onto stack
+#               1 0 1 0 d d 0 0
+#
+#       POP                     load RD from stack, sp++
+#               1 0 1 0 d d 0 1
+#
+#       STACKPAGE               set the upper 8 bits of push and pop
+#               1 0 1 0 d d 1 0
+#
+#       SLI             RD, IMM shift RD 4 left, then load 4-bit IMM into the lower four bits of RD
+#               1 1 i i d d i i
+#
