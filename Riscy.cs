@@ -36,7 +36,7 @@ public static class Riscy
 		string[] debugOutFormat = {"n","x","b","x"};
 		string romFileName = "rom";
 		bool romFileExtSpecified = false;
-		string romFormat = "x";
+		string romFormat = "r";
 		string romFileExt = "";
 
 		if (args.Length < 1)
@@ -116,7 +116,7 @@ public static class Riscy
 					else
 					{
 						romFileName = arg;
-						romFileExt = romFormat.Equals("r") ? "" : ".txt";
+						romFileExt = romFormat.Equals("r") ? ".bin" : ".txt";
 					}
 					i++;
 					break;
@@ -129,7 +129,7 @@ public static class Riscy
 		}
 
 		_sim = new Simulator(program, debugEnabled, debugOutFormat);
-		if (!romFileExtSpecified) romFileExt = romFormat.Equals("r") ? "" : ".txt";
+		if (!romFileExtSpecified) romFileExt = romFormat.Equals("r") ? ".bin" : ".txt";
 		_romProg = new RomProgrammer(romFileName, romFormat, romFileExt);
 	}
 
