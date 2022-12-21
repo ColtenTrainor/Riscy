@@ -34,9 +34,4 @@ public static class Extensions
 			_ => "INVALID FORMAT PARAMETER"
 		};
 	}
-
-	public static char ToReg(this byte b)
-	{
-		return Convert.ToChar(b + 65);
-	}
 }

@@ -2,6 +2,10 @@
 
 public class RomProgrammer
 {
+    private string _outFileName;
+    private string _format;
+    private string _fileExt;
+    
     private byte[] rom1 = new byte[2048];
     /*
      * in:
@@ -27,6 +31,13 @@ public class RomProgrammer
      * skip-forward-enable
      * jump-enable
      */
+
+    public RomProgrammer(string outFileName, string format, string fileExt)
+    {
+        _outFileName = outFileName;
+        _format = format;
+        _fileExt = fileExt;
+    }
 
     public void ProgramRoms()
     {
@@ -88,7 +99,23 @@ public class RomProgrammer
 
     public void SaveRomTables()
     {
-        File.WriteAllBytes("rom1", rom1);
-        File.WriteAllBytes("rom2", rom2);
+        if (_format.Equals("r"))
+        {
+            File.WriteAllBytes(_outFileName + "_1" + _fileExt, rom1);
+            File.WriteAllBytes(_outFileName + "_2" + _fileExt, rom2);
+        }
+        else
+        {
+            var file = File.AppendText(_outFileName + "_1" + _fileExt);
+            foreach (var b in rom1)
+            {
+                file.WriteLine(b.ToOutString(_format));
+            }
+            file = File.AppendText(_outFileName + "_2" + _fileExt);
+            foreach (var b in rom2)
+            {
+                file.WriteLine(b.ToOutString(_format));
+            }
+        }
     }
 }
